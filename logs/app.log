@@ -1,0 +1,24 @@
+{"time": "2025-01-18 18:58:53,585", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u043f\u0443\u0441\u043a \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 18:59:06,480", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 34-5"}
+{"time": "2025-01-18 18:59:31,934", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 6^x=36"}
+{"time": "2025-01-18 18:59:32,203", "level": "INFO", "source": "MathApp", "message": "\u0420\u043e\u0437\u0432'\u044f\u0437\u043e\u043a \u0440\u0456\u0432\u043d\u044f\u043d\u043d\u044f: [2]"}
+{"time": "2025-01-18 19:00:30,470", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 5*2+16/4"}
+{"time": "2025-01-18 19:01:10,843", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: state"}
+{"time": "2025-01-18 19:02:07,478", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 90-359"}
+{"time": "2025-01-18 19:02:12,426", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u043d\u044f \u0440\u043e\u0431\u043e\u0442\u0438 \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 19:05:39,384", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u043f\u0443\u0441\u043a \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 19:05:43,424", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 19-44"}
+{"time": "2025-01-18 19:05:55,791", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 15+4-"}
+{"time": "2025-01-18 19:05:55,817", "level": "ERROR", "source": "MathApp", "message": "ValueError: \u041f\u043e\u043c\u0438\u043b\u043a\u0430 \u0441\u0438\u043d\u0442\u0430\u043a\u0441\u0438\u0441\u0430: invalid syntax (<unknown>, line 1)"}
+{"time": "2025-01-18 19:06:19,549", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 41+x=2"}
+{"time": "2025-01-18 19:06:19,629", "level": "INFO", "source": "MathApp", "message": "\u0420\u043e\u0437\u0432'\u044f\u0437\u043e\u043a \u0440\u0456\u0432\u043d\u044f\u043d\u043d\u044f: [-39]"}
+{"time": "2025-01-18 19:06:25,243", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u043d\u044f \u0440\u043e\u0431\u043e\u0442\u0438 \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 19:06:32,512", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u043f\u0443\u0441\u043a \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 19:06:39,862", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: help"}
+{"time": "2025-01-18 19:06:42,279", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: state"}
+{"time": "2025-01-18 19:07:05,606", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: \u043e\u043a"}
+{"time": "2025-01-18 19:07:08,787", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u043d\u044f \u0440\u043e\u0431\u043e\u0442\u0438 \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 19:08:23,774", "level": "INFO", "source": "MathApp", "message": "\u0417\u0430\u043f\u0443\u0441\u043a \u0441\u0438\u0441\u0442\u0435\u043c\u0438."}
+{"time": "2025-01-18 19:08:28,043", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: 31+4"}
+{"time": "2025-01-18 19:08:34,295", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: help"}
+{"time": "2025-01-18 19:08:36,324", "level": "INFO", "source": "MathApp", "message": "\u0412\u0432\u0435\u0434\u0435\u043d\u043e \u0432\u0438\u0440\u0430\u0437: state"}
