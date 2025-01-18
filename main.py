@@ -105,7 +105,7 @@ class Core:
         try:
             with open(log_file_path, "r") as log_file:
                 logs = log_file.readlines()
-                print("Історія логів (за останній сеанс):")
+                print("Історія логів (останні 10):")
                 for line in logs[-10:]:  # Вивести останні 10 записів
                     print(line.strip())
         except FileNotFoundError:
@@ -158,22 +158,22 @@ class TreeBuilder:
         else:
             raise ValueError(f"Непідтримуваний вузол: {type(node).__name__}")
 
-    def _get_operator(self, op: ast.AST) -> Callable: # Повертає відповідний оператор SymPy для вузла AST
+    def _get_operator(self, op: ast.AST) -> str:  # Повертає рядковий оператор
         if isinstance(op, ast.Add):
-            return lambda x, y: x + y
+            return '+'
         elif isinstance(op, ast.Sub):
-            return lambda x, y: x - y
+            return '-'
         elif isinstance(op, ast.Mult):
-            return lambda x, y: x * y
+            return '*'
         elif isinstance(op, ast.Div):
-            return lambda x, y: x / y
+            return '/'
         elif isinstance(op, ast.Pow):
-            return lambda x, y: x**y
+            return '**'
         else:
             raise ValueError(f"Непідтримуваний оператор: {type(op).__name__}")
 
 
-class ExpressionEvaluator: # Компонент для обчислення та спрощення виразів
+class ExpressionEvaluator: # Компонент для спрощення та обчислення виразів
     def __init__(self):
         self.custom_functions = {}
 
@@ -184,9 +184,23 @@ class ExpressionEvaluator: # Компонент для обчислення та
             operator, left, right = expression_tree
             left_value = self.evaluate(left)
             right_value = self.evaluate(right)
-            return operator(left_value, right_value)
+            return self._apply_operator(operator, left_value, right_value)
         else:
             return expression_tree
+
+    def _apply_operator(self, operator: str, left, right):
+        if operator == '+':
+            return left + right
+        elif operator == '-':
+            return left - right
+        elif operator == '*':
+            return left * right
+        elif operator == '/':
+            return left / right
+        elif operator == '**':
+            return left**right
+        else:
+            raise ValueError(f"Невідомий оператор: {operator}")
 
     def simplify(self, expression: Any) -> Any:
         return sp.simplify(expression)
@@ -194,6 +208,7 @@ class ExpressionEvaluator: # Компонент для обчислення та
     def add_custom_function(self, name: str, func: Callable) -> None:
         sp.Function(name)(func)
         self.custom_functions[name] = func
+
 
 
 class JSONFormatter(logging.Formatter):
