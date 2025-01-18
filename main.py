@@ -1,3 +1,7 @@
+import logging
+import logging.handlers
+import json
+import os
 import sympy as sp
 import re
 import ast
@@ -47,24 +51,33 @@ class CLIHandler:
 
         5. Вихід з програми
            Опис: Для виходу з програми введіть "ні" на запит про продовження.
+
+        6. state
+           Опис: Перегляньте стан системи та історію логів.
         """
         print(help_text)
 
 
 class Core:
-    def __init__(self):
+    def __init__(self, logger):
         self.parser = ExpressionParser()
         self.tree_builder = TreeBuilder()
         self.evaluator = ExpressionEvaluator()
         self.cli = CLIHandler()
+        self.logger = logger
 
     def run(self) -> None:
+        self.logger.info("Запуск системи.")
         print("Для отримання допомоги введіть 'help'.")
         while True:
             try:
                 user_input = self.cli.get_user_input().strip().lower()
+                self.logger.info(f"Введено вираз: {user_input}")
                 if user_input == "help":
                     self.cli.display_help()
+                    continue
+                elif user_input == "state":
+                    self.display_state()
                     continue
 
                 if "=" in user_input:  # Перевірка на рівняння
@@ -76,33 +89,52 @@ class Core:
 
                 self.cli.display_result(result)
             except ValueError as ve:
+                self.logger.error(f"ValueError: {ve}")
                 self.cli.display_error(ve)
             except Exception as e:
+                self.logger.error(f"Unhandled error: {e}")
                 self.cli.display_error(e)
 
             if not self.cli.ask_to_continue():
+                self.logger.info("Завершення роботи системи.")
                 print("Дякуємо за використання програми! До побачення!")
                 break
 
-        def solve_equation(self, equation: str) -> Any:
+    def display_state(self) -> None:
+        log_file_path = "logs/app.log"
+        try:
+            with open(log_file_path, "r") as log_file:
+                logs = log_file.readlines()
+                print("Історія логів (за останній сеанс):")
+                for line in logs[-10:]:  # Вивести останні 10 записів
+                    print(line.strip())
+        except FileNotFoundError:
+            print(f"Файл журналу {log_file_path} не знайдено.")
+        except Exception as e:
+            print(f"Сталася помилка при читанні журналу: {e}")
+
+    def solve_equation(self, equation: str) -> Any:
+        try:
             lhs, rhs = equation.split("=")
             lhs_expr = sp.sympify(lhs.strip())
             rhs_expr = sp.sympify(rhs.strip())
 
-            symbol = sp.symbols("x")  # Розв'язання рівняння в SymPy
+            symbol = sp.symbols("x") # Розв'язання рівняння в SymPy 
             eq = sp.Eq(lhs_expr, rhs_expr)
             solution = sp.solve(eq, symbol)
 
             if solution:
+                self.logger.info(f"Розв'язок рівняння: {solution}")
                 return f"Розв'язок: x = {solution[0]}"
-
             else:
-                return (
-                    "Немає розв'язку або рівняння має нескінченну кількість розв'язків."
-                )
+                self.logger.warning("Рівняння не має розв'язків.")
+                return "Немає розв'язку або рівняння має нескінченну кількість розв'язків."
+        except Exception as e:
+            self.logger.error(f"Помилка розв'язання рівняння: {e}")
+            raise ValueError("Помилка під час розв'язання рівняння.")
 
 
-class ExpressionParser:  # Компонент для аналізу текстових математичних виразів
+class ExpressionParser: # Компонент для аналізу текстових математичних виразів
     def parse(self, expression: str) -> ast.AST:
         try:
             expression = expression.replace("^", "**")
@@ -126,9 +158,7 @@ class TreeBuilder:
         else:
             raise ValueError(f"Непідтримуваний вузол: {type(node).__name__}")
 
-    def _get_operator(
-        self, op: ast.AST
-    ) -> Callable:  # Повертає відповідний оператор SymPy для вузла AST
+    def _get_operator(self, op: ast.AST) -> Callable: # Повертає відповідний оператор SymPy для вузла AST
         if isinstance(op, ast.Add):
             return lambda x, y: x + y
         elif isinstance(op, ast.Sub):
@@ -143,7 +173,7 @@ class TreeBuilder:
             raise ValueError(f"Непідтримуваний оператор: {type(op).__name__}")
 
 
-class ExpressionEvaluator:  # Компонент для обчислення та спрощення виразів
+class ExpressionEvaluator: # Компонент для обчислення та спрощення виразів
     def __init__(self):
         self.custom_functions = {}
 
@@ -166,6 +196,40 @@ class ExpressionEvaluator:  # Компонент для обчислення т�
         self.custom_functions[name] = func
 
 
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            "time": self.formatTime(record, self.datefmt),
+            "level": record.levelname,
+            "source": record.name,
+            "message": record.getMessage(),
+        }
+        return json.dumps(log_record)
+
+
+
+def setup_logging(log_level=logging.INFO, log_dir="logs"):
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    log_file = os.path.join(log_dir, "app.log") # Відправлення логів з кожного запуску у загальний файл
+    
+    logger = logging.getLogger("MathApp")
+    logger.setLevel(log_level)
+
+    file_handler = logging.FileHandler(log_file, mode='a') # Mode a дозволяє зберігати попередні логи з кожним запуском
+    file_handler.setFormatter(JSONFormatter())
+
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(logging.Formatter("%(levelname)s - %(message)s"))
+
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    return logger
+
+
+logger = setup_logging()
+
 if __name__ == "__main__":
-    core = Core()
+    core = Core(logger)
     core.run()
